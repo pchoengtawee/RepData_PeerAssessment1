@@ -23,7 +23,6 @@ steps <- data %>%
   summarize(steps = sum(steps)) %>%
   print
 ```
-
 ```{r, echo=FALSE}
 ggplot(steps, aes(x = steps)) + geom_histogram(fill = "firebrick", binwidth = 1000) + labs(title = "Histogram of Steps per day", x = "Steps per day", y = "Frequency")
 ```
