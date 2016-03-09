@@ -7,8 +7,35 @@ output:
 
 
 ## Loading and preprocessing the data
+```{r}
+library(knitr)
+opts_chunk$set(echo = TRUE)
 
+library(dplyr)
+library(lubridate)
+library(ggplot2)
 
+data <- read.csv("activity.csv", header = TRUE, sep = ',', colClasses = c("numeric", "character","integer"))
+
+data$date <- ymd(data$date)
+
+steps <- data %>%
+  filter(!is.na(steps)) %>%
+  group_by(date) %>%
+  summarize(steps = sum(steps)) %>%
+  print
+```
+A histogram of the total number of steps taken each day:
+
+```{r, echo=FALSE}
+ggplot(steps, aes(x = steps)) + geom_histogram(fill = "firebrick", binwidth = 1000) + labs(title = "Histogram of Steps per day", x = "Steps per day", y = "Frequency")
+```
+```{r}
+mean_steps <- mean(steps$steps, na.rm = TRUE)
+median_steps <- median(steps$steps, na.rm = TRUE)
+mean_steps
+median_steps
+```
 
 ## What is mean total number of steps taken per day?
 
